@@ -1,6 +1,7 @@
 using GuruCaseOne.Entities.Base;
 using GuruCaseOne.Entities.Tiles;
 using GuruCaseOne.Helpers;
+using System;
 
 namespace GuruCaseOne.Entities.Classes
 {
@@ -9,6 +10,7 @@ namespace GuruCaseOne.Entities.Classes
         public DefaultTile()
         {
             TileType = TileType.Default;
+            interactAbility = new InteractAbility(TileType);
         }
 
         public override TileType GetTileType()
@@ -16,10 +18,10 @@ namespace GuruCaseOne.Entities.Classes
             return TileType;
         }
 
-        public override void Interact(TileMono tileMono = null)
+        public override void Interact(TileMono tileMono = null, Action<TileMono> callback = null)
         {
             tileMono.ChangeTileType(TileType.Marked);
-            PlayReferences.Instance.MatchDetector.CheckPossibleMatch(tileMono);
+            interactAbility.Interact(tileMono, callback);
         }
     }
 }

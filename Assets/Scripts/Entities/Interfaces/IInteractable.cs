@@ -1,7 +1,10 @@
+using GuruCaseOne.Entities.Tiles;
+using System;
+
 namespace GuruCaseOne.Interfaces
 {
-    interface IInteractable
+    public interface IInteractable
     {
-        void Interact();
+        public void Interact(TileMono tileMono = null, Action<TileMono> callback = null);
     }
 }
