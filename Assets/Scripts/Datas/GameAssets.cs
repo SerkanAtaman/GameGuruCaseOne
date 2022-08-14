@@ -7,5 +7,7 @@ namespace GuruCaseOne.Datas
     {
         [field: SerializeField] public GameObject DummyTilePref { get; private set; }
         [field: SerializeField] public GameObject TileMonoPref { get; private set; }
+
+        [field: SerializeField] public Sprite[] TileSprites { get; private set; }
     }
 }
