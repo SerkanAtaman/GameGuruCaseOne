@@ -2,6 +2,7 @@ using UnityEngine;
 using GuruCaseOne.Helpers;
 using GuruCaseOne.Interfaces;
 using GuruCaseOne.Entities.Base;
+using System;
 
 namespace GuruCaseOne.Entities.Tiles
 {
@@ -30,9 +31,9 @@ namespace GuruCaseOne.Entities.Tiles
             NeighborController.FindNeighbors();
         }
 
-        public void Interact()
+        public void Interact(TileMono tileMono = null, Action<TileMono> callback = null)
         {
-            BaseTile.Interact(this);
+            BaseTile.Interact(this, callback);
         }
 
         public bool IsMatchableWith(TileMono tileMono)

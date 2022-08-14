@@ -17,7 +17,6 @@ namespace GuruCaseOne
         public BoardData BoardData { get; private set; }
         public BoardCreator BoardCreator { get; private set; }
         public CameraFitter CamFitter { get; private set; }
-        public MatchDetector MatchDetector { get; private set; }
 
         public Transform BoardHolder { get; private set; }
 
@@ -43,7 +42,6 @@ namespace GuruCaseOne
             BoardData = new BoardData(BoardSetting.BoardSize);
             BoardCreator = new BoardCreator();
             CamFitter = new CameraFitter();
-            MatchDetector = new MatchDetector();
             
             BoardCreator.CreateBoard();
         }
