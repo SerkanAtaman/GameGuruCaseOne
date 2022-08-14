@@ -10,12 +10,14 @@ namespace GuruCaseOne.Entities.Tiles
         [SerializeField] private SpriteRenderer _renderer = null;
 
         public BaseTile BaseTile { get; private set; }
+        public TileNeighborController NeighborController { get; private set; }
 
         public Vector2Int Coordinates { get; private set; }
 
         public void Init(TileType tileType)
         {
             BaseTile = TileHelper.GetBaseTile(tileType);
+            NeighborController = new TileNeighborController(this);
         }
 
         public void SetCoordinates(int x, int y)
@@ -23,9 +25,19 @@ namespace GuruCaseOne.Entities.Tiles
             Coordinates = new Vector2Int(x, y);
         }
 
+        public void FindNeighbors()
+        {
+            NeighborController.FindNeighbors();
+        }
+
         public void Interact()
         {
             BaseTile.Interact(this);
+        }
+
+        public bool IsMatchableWith(TileMono tileMono)
+        {
+            return tileMono.BaseTile.GetTileType() == BaseTile.GetTileType();
         }
 
         public void ChangeTileType(TileType type)

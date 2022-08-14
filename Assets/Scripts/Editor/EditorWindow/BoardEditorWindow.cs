@@ -118,13 +118,19 @@ namespace GuruCaseOne.Editor
 
         private void SetFOW(Vector3 bottomLeft, Vector3 topRight)
         {
+            Camera cam = Camera.main;
+
+            AdjustFowHorizontaly(cam, bottomLeft, topRight);
+            AdjustFowVerticaly(cam, bottomLeft, topRight);
+        }
+
+        private void AdjustFowHorizontaly(Camera cam, Vector3 bottomLeft, Vector3 topRight)
+        {
             Vector3 minFowPos = bottomLeft + new Vector3(0, topRight.y * 0.5f, 0);
             Vector3 cameraMidLeftPos = CameraUtility.GetViewPosition(0, 0.5f, 10);
 
-            float edgeDistance = minFowPos.x - cameraMidLeftPos.x;
-
-            Camera cam = Camera.main;
             int iteration = 0;
+            float edgeDistance = minFowPos.x - cameraMidLeftPos.x;
 
             if (edgeDistance < 1)
             {
@@ -152,6 +158,43 @@ namespace GuruCaseOne.Editor
                     if (iteration >= 10000) break;
                 }
             }
+        }
+
+        private void AdjustFowVerticaly(Camera cam, Vector3 bottomLeft, Vector3 topRight)
+        {
+            Vector3 minFowPos = bottomLeft + new Vector3(topRight.x * 0.5f, 0, 0);
+            Vector3 cameraMidBottomPos = CameraUtility.GetViewPosition(0.5f, 0f, 10);
+
+            int iteration = 0;
+            float edgeDistance = minFowPos.y - cameraMidBottomPos.y;
+            float targetDistance = ((float)Screen.height / Screen.width) * 1.5f;
+
+            if (edgeDistance < targetDistance)
+            {
+                while (edgeDistance < targetDistance)
+                {
+                    cam.fieldOfView += 1f;
+
+                    cameraMidBottomPos = CameraUtility.GetViewPosition(0.5f, 0.0f, 10);
+                    edgeDistance = minFowPos.y - cameraMidBottomPos.y;
+
+                    iteration++;
+                    if (iteration >= 10000) break;
+                }
+            }
+            /*else if (edgeDistance > targetDistance)
+            {
+                while (edgeDistance > targetDistance)
+                {
+                    cam.fieldOfView -= 1f;
+
+                    cameraMidBottomPos = CameraUtility.GetViewPosition(0.5f, 0.0f, 10);
+                    edgeDistance = minFowPos.y - cameraMidBottomPos.y;
+
+                    iteration++;
+                    if (iteration >= 10000) break;
+                }
+            }*/
         }
     }
 }
