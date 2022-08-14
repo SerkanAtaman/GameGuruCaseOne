@@ -2,6 +2,7 @@ using UnityEngine;
 using GuruCaseOne.Datas;
 using GuruCaseOne.Creators;
 using GuruCaseOne.Entities.Camera;
+using GuruCaseOne.Entities.MatchSystem;
 
 namespace GuruCaseOne
 {
@@ -11,10 +12,12 @@ namespace GuruCaseOne
 
         [field:SerializeField] public GameAssets GameAsset { get; private set; }
         [field:SerializeField] public BoardSettings BoardSetting { get; private set; }
+        [SerializeField] private GameObject _informationCanvas;
 
         public BoardData BoardData { get; private set; }
         public BoardCreator BoardCreator { get; private set; }
         public CameraFitter CamFitter { get; private set; }
+        public MatchDetector MatchDetector { get; private set; }
 
         public Transform BoardHolder { get; private set; }
 
@@ -26,6 +29,8 @@ namespace GuruCaseOne
             }
 
             Instance = this;
+
+            _informationCanvas.SetActive(false);
         }
 
         private void Start()
@@ -38,16 +43,20 @@ namespace GuruCaseOne
             BoardData = new BoardData(BoardSetting.BoardSize);
             BoardCreator = new BoardCreator();
             CamFitter = new CameraFitter();
+            MatchDetector = new MatchDetector();
             
             BoardCreator.CreateBoard();
-
-            CamFitter.FitCameraFOW(BoardData.GetBottomLeftTilePos(), BoardData.GetTopRightTilePos());
         }
 
         private void DeleteDummyBoard()
         {
             GameObject dummy = GameObject.Find("BoardHolder");
             if(dummy != null) DestroyImmediate(dummy);
+        }
+
+        public void ResetBoardDatas()
+        {
+            BoardData = new BoardData(BoardSetting.BoardSize);
         }
     }
 }

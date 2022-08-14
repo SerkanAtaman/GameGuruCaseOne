@@ -38,7 +38,7 @@ namespace GuruCaseOne.Datas
 
         public Vector3 GetTopRightTilePos()
         {
-            return new Vector3(Size, Size, 0);
+            return new Vector3(Size - 1, Size - 1, 0);
         }
 
         public void UpdateTile(int x, int y, TileMono tile)

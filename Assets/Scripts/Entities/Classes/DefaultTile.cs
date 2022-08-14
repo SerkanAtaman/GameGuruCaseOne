@@ -19,6 +19,7 @@ namespace GuruCaseOne.Entities.Classes
         public override void Interact(TileMono tileMono = null)
         {
             tileMono.ChangeTileType(TileType.Marked);
+            PlayReferences.Instance.MatchDetector.CheckPossibleMatch(tileMono);
         }
     }
 }
